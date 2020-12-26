@@ -60,11 +60,19 @@ public class UserListPage extends PageObject {
     private WebElement userAdd_btn;
     @FindBy(id = "jml-submit-button")
     private WebElement save_btn;
-    
+    @FindBy(xpath = "//button[contains(text(),'ID')]")
+    private WebElement idSort_btn;
+    @FindBy(xpath = "//mat-cell[contains(@id,'_uniqueReferenceId_value')]")
+    private WebElement uniqueReferenceId_value;
+
+   
     
 //GENERIC method for selecting dropdown
 //    actual xpath for any drop down with mat-option
     public String SelectDropddownvalue =  "//mat-option[contains(., \""+"PARAMETER"+"\")]";
+    public String userfirstname_fld = "//div[text()="+"'PARAMETER'"+"]";
+    
+
 
  	public WebElement prepareWebElementWithDynamicXpath(String xpathValue, String substitutionValue) {
  		xpathValue = xpathValue.replace("PARAMETER", substitutionValue);
@@ -159,6 +167,14 @@ public class UserListPage extends PageObject {
     
     public WebElement getSave_btn() {
         return save_btn;
+    }
+    
+    public WebElement getIdSort_btn() {
+        return idSort_btn;
+    }
+    
+    public WebElement getUniqueReferenceId_value() {
+    	return uniqueReferenceId_value;
     }
     
 }

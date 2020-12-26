@@ -5,6 +5,7 @@ package StepDefinitions;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.HashMap;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -29,6 +30,7 @@ public class UserListDefs {
 	private PostLoginPage page;
 	public Duration timeout;
 	private UserListPage userListPage;
+	public HashMap userdtls= new HashMap();
 
 	public UserListDefs() throws FileNotFoundException, IOException {
 		driver = Hooks.driver;
@@ -48,6 +50,9 @@ public class UserListDefs {
 	public void iAddAUserWithRequiredFields(String uniqueRef, String otherRef, String firstName, String surname,
 			String email, String gender, String ethnicSubgrp, String force, String rank, String userName,
 			String password) throws Throwable {
+		
+		userdtls.put("uniqueRef", uniqueRef);
+		
 		userListPage.getUserAdd_btn().click();
 		Wctrl.MinWait();
 		userListPage.getUniqueReferenceId_txt().sendKeys(uniqueRef);
@@ -60,28 +65,33 @@ public class UserListDefs {
 		userListPage.getGender_dropDown().click();
 		userListPage.prepareWebElementWithDynamicXpath(userListPage.SelectDropddownvalue, gender).click();
 		Wctrl.MinWait();
-		userListPage.getGeography1_dropDown().click();
-		userListPage.prepareWebElementWithDynamicXpath(userListPage.SelectDropddownvalue, force).click();
-		Wctrl.MinWait();
 		userListPage.getEthnicSubgroup_dropDown().click();
 		userListPage.prepareWebElementWithDynamicXpath(userListPage.SelectDropddownvalue, ethnicSubgrp).click();
+		Wctrl.MinWait();
+		userListPage.getGeography1_dropDown().click();
+		userListPage.prepareWebElementWithDynamicXpath(userListPage.SelectDropddownvalue, force).click();
 		Wctrl.MinWait();
 		userListPage.getRank_dropDown().click();
 		userListPage.prepareWebElementWithDynamicXpath(userListPage.SelectDropddownvalue, rank).click();
 		Wctrl.MinWait();
 		userListPage.getSave_btn().click();
-		System.out.println("Debug");
-
+		Wctrl.MinWait();
+		Assert.assertEquals("User List",userListPage.getUser_list_label().getText());
 	}
 
 	@Then("^I select user row of \"([^\"]*)\"$")
-	public void iSelectUserRowOf(String arg1) throws Throwable {
-
+	public void iSelectUserRowOf(String firstname) throws Throwable {
+		userListPage.getIdSort_btn().click();
+		Wctrl.MinWait();
+		userListPage.getIdSort_btn().click();
+		Wctrl.MinWait();
+		userListPage.prepareWebElementWithDynamicXpath(userListPage.userfirstname_fld, firstname).click();	
 	}
 
 	@Then("^I can see user information in the user details page$")
 	public void iCanSeeUserInformationInTheUserDetailsPage() throws Throwable {
-
+		
+		Assert.assertEquals(userdtls.get("uniqueRef"),userListPage.getUniqueReferenceId_value().getText());
 	}
 
 }

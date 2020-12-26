@@ -14,4 +14,4 @@ Feature: User List scenarios
     
     Examples:
     | Unique Reference Id | Other Ref | First Name | Surname  | Email         | Gender | Ethnic Subgroup | Force    | Rank  | User Name | Password   |
-    | 228-Test-S3         | TestRef1  | Kevin      | Peterson | test1@jml.com | Male   | White - Irish   | Midshire | Staff | kp        | kevin1234$ |
+    | 228-Test-S3         | TestRef1  | Kevin      | Peterson | test1@jml.com | Male   | White - Irish   | Midshire | Staff | kp        | Kevin1234$ |
