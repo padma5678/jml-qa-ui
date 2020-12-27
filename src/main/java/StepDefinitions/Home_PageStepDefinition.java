@@ -46,7 +46,7 @@ public class Home_PageStepDefinition{
 	public void consultantLoginToChronicleApplicationAs(String arg1) throws Throwable {
 		driver.get(putil.getPropertyValue("URL"));
 		Wctrl.MinWait();
-		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		page.getLogin_Btn().click();
 		page.getUsername_txt().sendKeys(putil.getPropertyValue("Consultant_User")); 

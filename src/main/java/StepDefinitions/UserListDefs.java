@@ -52,6 +52,11 @@ public class UserListDefs {
 			String password) throws Throwable {
 		
 		userdtls.put("uniqueRef", uniqueRef);
+		userdtls.put("firstName", firstName);
+		userdtls.put("surname", surname);
+		userdtls.put("email", email);
+		userdtls.put("force", force);
+		userdtls.put("rank", rank);
 		
 		userListPage.getUserAdd_btn().click();
 		Wctrl.MinWait();
@@ -85,13 +90,72 @@ public class UserListDefs {
 		Wctrl.MinWait();
 		userListPage.getIdSort_btn().click();
 		Wctrl.MinWait();
-		userListPage.prepareWebElementWithDynamicXpath(userListPage.userfirstname_fld, firstname).click();	
+		userListPage.prepareWebElementWithDynamicXpath(userListPage.userfirstname_fld, firstname).click();
+		Wctrl.MinWait();
 	}
 
 	@Then("^I can see user information in the user details page$")
 	public void iCanSeeUserInformationInTheUserDetailsPage() throws Throwable {
-		
 		Assert.assertEquals(userdtls.get("uniqueRef"),userListPage.getUniqueReferenceId_value().getText());
+		Assert.assertEquals(userdtls.get("firstName"),userListPage.getFirstname_value().getText());
+		Assert.assertEquals(userdtls.get("surname"),userListPage.getSurname_value().getText());
+		Assert.assertEquals(userdtls.get("email"),userListPage.getEmail_value().getText());
+		Assert.assertEquals(userdtls.get("force"),userListPage.getGeography1_value().getText());
+		Assert.assertEquals(userdtls.get("rank"),userListPage.getRank_value().getText());
+	}
+	
+	@When("^I switch on \"([^\"]*)\" column on user list page$")
+	public void iSwitchOnColumnOnUserListPage(String surname) throws Throwable {
+		userListPage.getColumns_btn().click();
+		Wctrl.MinWait();
+		String status = userListPage.prepareWebElementWithDynamicXpath(userListPage.columnSelection_fld_Status, surname).getAttribute("aria-checked");
+		if (status.equalsIgnoreCase("true")) 
+		{
+			System.out.println("TestInfo : Check box already checked ");
+			userListPage.prepareWebElementWithDynamicXpath(userListPage.columnSelection_fld, surname).click();
+			Wctrl.MinWait();
+		    userListPage.getColumnUpdate_btn().click();
+		    Wctrl.MinWait();
+		}else {
+			System.out.println("TestInfo : Check box not checked ");
+	    }    
+	}
+
+	@When("^I switch \"([^\"]*)\" column on user list page$")
+	public void iSwitchColumnOnUserListPage(String surname) throws Throwable {
+		userListPage.getColumns_btn().click();
+		Wctrl.MinWait();
+		userListPage.prepareWebElementWithDynamicXpath(userListPage.columnSelection_fld, surname).click();
+		Wctrl.MinWait();
+	    userListPage.getColumnUpdate_btn().click();
+	    Wctrl.MinWait();
+	}
+
+	@Then("^I cannot see \"([^\"]*)\" column on user list page$")
+	public void iCannotSeeColumnOnUserListPage(String surname) throws Throwable {
+	try {
+			
+		if(userListPage.prepareWebElementWithDynamicXpath(userListPage.columnHeader_fld, surname).isDisplayed())
+		{
+			Assert.fail("Test Error : Column is Visible");
+		}else {
+			Assert.assertTrue("Test Info : Column not Visible", true);
+		}
+		} catch (Exception e) {
+			System.out.println("Test Info : Column not Visible");
+		}
+	}
+
+	@Then("^I can see \"([^\"]*)\" column on user list page$")
+	public void iCanSeeColumnOnUserListPage(String surname) throws Throwable {
+		if(!userListPage.prepareWebElementWithDynamicXpath(userListPage.columnHeader_fld, surname).isDisplayed())
+		{
+			Assert.fail("Test Error : Column is not visible");
+		}else {
+			Assert.assertTrue("Test Info : Column is visible", true);
+		}
+	   
+	   
 	}
 
 }

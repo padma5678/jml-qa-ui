@@ -64,15 +64,40 @@ public class UserListPage extends PageObject {
     private WebElement idSort_btn;
     @FindBy(xpath = "//mat-cell[contains(@id,'_uniqueReferenceId_value')]")
     private WebElement uniqueReferenceId_value;
+    @FindBy(xpath = "//mat-cell[contains(@id,'_firstname_value')]")
+    private WebElement firstname_value;
+    @FindBy(xpath = "//mat-cell[contains(@id,'_surname_value')]")
+    private WebElement surname_value;
+    @FindBy(xpath = "//mat-cell[contains(@id,'_email_value')]")
+    private WebElement email_value;
+    @FindBy(xpath = "//mat-cell[contains(@id,'_geography1_value')]")
+    private WebElement geography1_value;
+    @FindBy(xpath = "//mat-cell[contains(@id,'_rank_value')]")
+    private WebElement rank_value;
+    @FindBy(id = "jml-column-button")
+    private WebElement columns_btn;
+    @FindBy(id = "jml-button-update-columns")
+    private WebElement columnUpdate_btn;
+    
+    
 
-   
+
+
+    
     
 //GENERIC method for selecting dropdown
 //    actual xpath for any drop down with mat-option
     public String SelectDropddownvalue =  "//mat-option[contains(., \""+"PARAMETER"+"\")]";
     public String userfirstname_fld = "//div[text()="+"'PARAMETER'"+"]";
+    public String columnHeader_fld = "//button[contains(text(),'PARAMETER')]";
+    public String columnSelection_fld = "//span[contains(text(),'PARAMETER')]/parent::label/div";
     
-
+    public String columnSelection_fld_Status = "//span[contains(text(),'PARAMETER')]/parent::label/div/input";
+    
+  //span[contains(text(),'Email')]/parent::label/div/input[@aria-checked='false']
+    
+    
+  
 
  	public WebElement prepareWebElementWithDynamicXpath(String xpathValue, String substitutionValue) {
  		xpathValue = xpathValue.replace("PARAMETER", substitutionValue);
@@ -176,5 +201,34 @@ public class UserListPage extends PageObject {
     public WebElement getUniqueReferenceId_value() {
     	return uniqueReferenceId_value;
     }
+    
+    public WebElement getFirstname_value() {
+    	return firstname_value;
+    }
+    
+    public WebElement getSurname_value() {
+    	return surname_value;
+    }
+    
+    public WebElement getEmail_value() {
+    	return email_value;
+    }
+    
+    public WebElement getGeography1_value() {
+    	return geography1_value;
+    }
+    
+    public WebElement getRank_value() {
+    	return rank_value;
+    }
+
+    public WebElement getColumns_btn() {
+    	return columns_btn;
+    }
+    
+    public WebElement getColumnUpdate_btn() {
+    	return columnUpdate_btn;
+    }
+    
     
 }
