@@ -45,6 +45,7 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import util.WebController;
+import com.cucumber.listener.Reporter;
 
 public class Hooks {
 	public static Scenario scenario;
@@ -118,16 +119,20 @@ public class Hooks {
 		try {
 
 			if (scenario.isFailed()) {
-				String fileSeperator = null;
 				String screenShotName = scenario.getName() + " " + getTimeStamp() + ".png";
 				String TotalFileName = scenario.getId().split(";")[0];
 				String FeatureName = TotalFileName.replace("-", "_").toUpperCase();
-				String imagePath = ".." + fileSeperator + "Screenshots" + fileSeperator + "Results" + fileSeperator
-						+ FeatureName + fileSeperator + takeScreenShot(screenShotName, FeatureName);
+
+				String imagePath = System.getProperty("user.dir")+ File.separator +"Screenshots" + File.separator + "Results" + File.separator
+						+ FeatureName + File.separator + takeScreenShot(screenShotName, FeatureName);
+
+				System.out.println("Path"+imagePath);
 				System.out.println("TESTINFO >> Script Failed & Screenshot Captured");
 
 				byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
 				scenario.embed(screenshot, "image/png");
+
+				Reporter.addScreenCaptureFromPath(imagePath);
 
 			}
 		} catch (Exception e) {

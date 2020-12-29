@@ -50,7 +50,7 @@ public class UserListDefs {
 	public void iAddAUserWithRequiredFields(String uniqueRef, String otherRef, String firstName, String surname,
 			String email, String gender, String ethnicSubgrp, String force, String rank, String userName,
 			String password) throws Throwable {
-		
+		uniqueRef = uniqueRef+"-"+Wctrl.RandomStringGeneration();
 		userdtls.put("uniqueRef", uniqueRef);
 		userdtls.put("firstName", firstName);
 		userdtls.put("surname", surname);
@@ -64,8 +64,8 @@ public class UserListDefs {
 		userListPage.getOtherRef_txt().sendKeys(otherRef);
 		userListPage.getFirstName_txt().sendKeys(firstName);
 		userListPage.getSurname_txt().sendKeys(surname);
-		userListPage.getEmail_txt().sendKeys(email);
-		userListPage.getUsername_txt().sendKeys(userName);
+		userListPage.getEmail_txt().sendKeys(Wctrl.RandomEmailGeneration());
+		userListPage.getUsername_txt().sendKeys(Wctrl.RandomStringGeneration());
 		userListPage.getPassword_txt().sendKeys(password);
 		userListPage.getGender_dropDown().click();
 		userListPage.prepareWebElementWithDynamicXpath(userListPage.SelectDropddownvalue, gender).click();
