@@ -1,6 +1,5 @@
 package jmlRunner;
 
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import cucumber.api.junit.Cucumber;
@@ -14,9 +13,9 @@ import cucumber.api.CucumberOptions;
 		"json:target/cucumber-reports/cucumber.json", "pretty:target/cucumber-reports/cucumber-pretty.txt",
 		"usage:target/cucumber-reports/cucumber-usage.json", "junit:target/cucumber-reports/cucumber-results.xml",
 		"com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-extent-reports/report.html" }, 
-		features = {"src/main/resources/features/configuration" },
-		glue = { "PageObjects","StepDefinitions", "util","jmlRunner" }, 
-		tags = {"@testcase2" }, 
+		features = {"src/main/resources/features" },
+		glue = { "pageObjects","stepDefinitions", "util","jmlRunner" },
+		tags = {"@UserModule"},
 		dryRun = false, 
 		snippets = SnippetType.CAMELCASE)
 

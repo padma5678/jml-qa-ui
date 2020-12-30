@@ -1,4 +1,4 @@
-package StepDefinitions;
+package stepDefinitions;
 
 
 
@@ -71,10 +71,10 @@ public class Hooks {
 		if (browser.equalsIgnoreCase("chrome") || browser.equalsIgnoreCase("Google chrome")) {
 			ChromeOptions chromeOptions = new ChromeOptions();
 			HashMap chromePrefs = new HashMap();
-			chromePrefs.put("download.default_directory", "//tmp//automation_downloads");
+//			chromePrefs.put("download.default_directory", "//tmp//automation_downloads");
 			chromeOptions = new ChromeOptions();
 			chromeOptions.setExperimentalOption("useAutomationExtension", false);
-			chromeOptions.setExperimentalOption("prefs", chromePrefs);
+//			chromeOptions.setExperimentalOption("prefs", chromePrefs);
 			chromeOptions.setExperimentalOption("excludeSwitches", new String[] { "enable-automation" });
 			System.setProperty("webdriver.chrome.driver", "Drivers" + File.separator + "chromedriver.exe");
 			System.setProperty("webdriver.chrome.silentOutput", "true");
@@ -119,12 +119,12 @@ public class Hooks {
 		try {
 
 			if (scenario.isFailed()) {
+
 				String screenShotName = scenario.getName() + " " + getTimeStamp() + ".png";
 				String TotalFileName = scenario.getId().split(";")[0];
 				String FeatureName = TotalFileName.replace("-", "_").toUpperCase();
 
-				String imagePath = System.getProperty("user.dir")+ File.separator +"Screenshots" + File.separator + "Results" + File.separator
-						+ FeatureName + File.separator + takeScreenShot(screenShotName, FeatureName);
+				String imagePath = takeScreenShot(screenShotName, FeatureName);
 
 				System.out.println("Path"+imagePath);
 				System.out.println("TESTINFO >> Script Failed & Screenshot Captured");
@@ -159,7 +159,9 @@ public class Hooks {
 			File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 			File targetFile = new File("Screenshots" + fileSeperator + "Results" + fileSeperator + FeatureName,
 					screenShotName);
+			File targetFile1 = new File("target" + fileSeperator + "cucumber-extent-reports", screenShotName);
 			FileUtils.copyFile(screenshotFile, targetFile);
+			FileUtils.copyFile(screenshotFile, targetFile1);
 			return screenShotName;
 		} catch (Exception e) {
 			System.out.println("An exception occured while taking screenshot " + e.getCause());

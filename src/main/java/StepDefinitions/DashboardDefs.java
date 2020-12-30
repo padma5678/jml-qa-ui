@@ -1,5 +1,4 @@
-package StepDefinitions;
-
+package stepDefinitions;
 
 import cucumber.api.java.en.Given;
 import util.PropertiesUtil;
@@ -9,8 +8,8 @@ import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
-import PageObjects.DashboardPage;
-import PageObjects.PostLoginPage;
+import pageObjects.DashboardPage;
+import pageObjects.PostLoginPage;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package StepDefinitions;
+package stepDefinitions;
 
 
 
@@ -13,8 +13,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-import PageObjects.PostLoginPage;
-import PageObjects.UserListPage;
+import pageObjects.PostLoginPage;
+import pageObjects.UserListPage;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -51,12 +51,16 @@ public class UserListDefs {
 			String email, String gender, String ethnicSubgrp, String force, String rank, String userName,
 			String password) throws Throwable {
 		uniqueRef = uniqueRef+"-"+Wctrl.RandomStringGeneration();
+		otherRef = otherRef+"-"+Wctrl.RandomStringGeneration();
+		userName = userName+"-"+Wctrl.RandomStringGeneration();
+		email = Wctrl.RandomEmailGeneration();
 		userdtls.put("uniqueRef", uniqueRef);
 		userdtls.put("firstName", firstName);
 		userdtls.put("surname", surname);
 		userdtls.put("email", email);
 		userdtls.put("force", force);
 		userdtls.put("rank", rank);
+		userdtls.put("userName", userName);
 		
 		userListPage.getUserAdd_btn().click();
 		Wctrl.MinWait();
@@ -64,9 +68,7 @@ public class UserListDefs {
 		userListPage.getOtherRef_txt().sendKeys(otherRef);
 		userListPage.getFirstName_txt().sendKeys(firstName);
 		userListPage.getSurname_txt().sendKeys(surname);
-		userListPage.getEmail_txt().sendKeys(Wctrl.RandomEmailGeneration());
-		userListPage.getUsername_txt().sendKeys(Wctrl.RandomStringGeneration());
-		userListPage.getPassword_txt().sendKeys(password);
+		userListPage.getEmail_txt().sendKeys(email);
 		userListPage.getGender_dropDown().click();
 		userListPage.prepareWebElementWithDynamicXpath(userListPage.SelectDropddownvalue, gender).click();
 		Wctrl.MinWait();
@@ -79,6 +81,8 @@ public class UserListDefs {
 		userListPage.getRank_dropDown().click();
 		userListPage.prepareWebElementWithDynamicXpath(userListPage.SelectDropddownvalue, rank).click();
 		Wctrl.MinWait();
+		userListPage.getUsername_txt().sendKeys(userName);
+		userListPage.getPassword_txt().sendKeys(password);
 		userListPage.getSave_btn().click();
 		Wctrl.MinWait();
 		Assert.assertEquals("User List",userListPage.getUser_list_label().getText());
@@ -102,6 +106,7 @@ public class UserListDefs {
 		Assert.assertEquals(userdtls.get("email"),userListPage.getEmail_value().getText());
 		Assert.assertEquals(userdtls.get("force"),userListPage.getGeography1_value().getText());
 		Assert.assertEquals(userdtls.get("rank"),userListPage.getRank_value().getText());
+		Assert.assertEquals(userdtls.get("userName"),userListPage.getUserName_value().getText());
 	}
 	
 	@When("^I switch on \"([^\"]*)\" column on user list page$")

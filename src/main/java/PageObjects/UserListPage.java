@@ -1,4 +1,4 @@
-package PageObjects;
+package pageObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -74,29 +74,23 @@ public class UserListPage extends PageObject {
     private WebElement geography1_value;
     @FindBy(xpath = "//mat-cell[contains(@id,'_rank_value')]")
     private WebElement rank_value;
+    @FindBy(xpath = "//mat-cell[contains(@id,'_username_value')]")
+    private WebElement username_value;
     @FindBy(id = "jml-column-button")
     private WebElement columns_btn;
     @FindBy(id = "jml-button-update-columns")
     private WebElement columnUpdate_btn;
     
-    
-
-
 
     
-    
-//GENERIC method for selecting dropdown
-//    actual xpath for any drop down with mat-option
+   //GENERIC method for selecting dropdown
+   //actual xpath for any drop down with mat-option
     public String SelectDropddownvalue =  "//mat-option[contains(., \""+"PARAMETER"+"\")]";
     public String userfirstname_fld = "//div[text()="+"'PARAMETER'"+"]";
     public String columnHeader_fld = "//button[contains(text(),'PARAMETER')]";
     public String columnSelection_fld = "//span[contains(text(),'PARAMETER')]/parent::label/div";
-    
     public String columnSelection_fld_Status = "//span[contains(text(),'PARAMETER')]/parent::label/div/input";
-    
-  //span[contains(text(),'Email')]/parent::label/div/input[@aria-checked='false']
-    
-    
+
   
 
  	public WebElement prepareWebElementWithDynamicXpath(String xpathValue, String substitutionValue) {
@@ -220,6 +214,10 @@ public class UserListPage extends PageObject {
     
     public WebElement getRank_value() {
     	return rank_value;
+    }
+
+    public WebElement getUserName_value() {
+        return username_value;
     }
 
     public WebElement getColumns_btn() {

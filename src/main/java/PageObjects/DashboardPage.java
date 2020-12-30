@@ -1,4 +1,4 @@
-package PageObjects;
+package pageObjects;
 
 /**
  * Copyright (c) 2019 JML Software Solutions Ltd

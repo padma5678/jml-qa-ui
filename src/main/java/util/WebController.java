@@ -34,7 +34,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import StepDefinitions.Hooks;
+import stepDefinitions.Hooks;
 import cucumber.deps.com.thoughtworks.xstream.InitializationException;
 
 public class WebController {
@@ -209,11 +209,11 @@ public class WebController {
 	/**
 	 * Purpose: To handle the synchronization issues
 	 * 
-	 * @param value
+//	 * @param value
 	 */
 	public void MinWait() {
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(2000);
 
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -223,7 +223,7 @@ public class WebController {
 
 	public void MaxWait() {
 		try {
-			Thread.sleep(6000);
+			Thread.sleep(4000);
 
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -799,7 +799,7 @@ public class WebController {
 			char randomChar = Number.charAt(index);
 			sb.append(randomChar);
 		}
-		String randomString = sb.toString() + "@gmail.com";
+		String randomString = "autogen"+sb.toString() + "@gmail.com";
 		return randomString;
 	}
 

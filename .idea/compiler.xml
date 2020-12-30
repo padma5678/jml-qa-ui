@@ -6,11 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Chronicle" />
+        <module name="jml-qa-ui-automation" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="Chronicle" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>
