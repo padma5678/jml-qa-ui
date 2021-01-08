@@ -12,11 +12,11 @@
 Feature: User List scenarios
 
   Background:
-    Given Consultant login to Chronicle application as "consultant"
-    And Consultant landed on Home page of Chronicle application
+    Given User login to Chronicle application as "admin"
+    And User landed on Home page of Chronicle application
 
   @testcase1
-  Scenario Outline: User with user write permissions can add new ethnicity subgroup
+  Scenario Outline: User with user write permissions can add new user
     Given I click on users link
     And I am on the "User List" page
     When I add a user with required fields "<Unique Reference Id>","<Other Ref>", "<First Name>", "<Surname>", "<Email>", "<Gender>", "<Ethnic Subgroup>", "<Force>", "<Rank>", "<User Name>", "<Password>"
@@ -31,7 +31,7 @@ Feature: User List scenarios
   Scenario: User can switch columns on user list page
     Given I click on users link
     And I am on the "User List" page
-    When I switch on "Surname" column on user list page
+    When I switch off "Surname" column on user list page
     Then I cannot see "Surname" column on user list page
-    When I switch "Surname" column on user list page
+    When I switch on "Surname" column on user list page
     Then I can see "Surname" column on user list page

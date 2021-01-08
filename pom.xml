@@ -30,7 +30,6 @@
 		<maven.surefire.plugin>2.22.2</maven.surefire.plugin>
 		<maven.failsafe.plugin>2.22.2</maven.failsafe.plugin>
 		<cucumber.jvm.parallel.plugin>4.2.0</cucumber.jvm.parallel.plugin>
-		<cucumber.jvm.parallel.version>5.0.0</cucumber.jvm.parallel.version>
 		<base.dir>.</base.dir>
 	</properties>
 
@@ -98,7 +97,7 @@
 			<version>3.1.5</version>
 		</dependency>
 
-		<!-- Section includes dependencies to support selenium apis and selenese 
+		<!-- Section includes dependencies to support selenium apis and selenese
 			methods -->
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
@@ -136,7 +135,7 @@
 			<version>${selenium.version}</version>
 		</dependency>
 
-		<!-- Section includes dependencies to support apache poi apis to interact 
+		<!-- Section includes dependencies to support apache poi apis to interact
 			with excel files -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -216,12 +215,12 @@
 	</dependencies>
 
 	<profiles>
-
+<!--Single thread execution, feature by feature execution-->
 		<profile>
 			<id>individual-profile</id>
 			<build>
 				<plugins>
-					<!-- Plugin to initialize the project with properties read from the 
+					<!-- Plugin to initialize the project with properties read from the
 						properties file -->
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
@@ -234,7 +233,7 @@
 									<goal>read-project-properties</goal>
 								</goals>
 								<configuration>
-									<files> <file>${project.basedir}/Chronicle.properties</file> 
+									<files> <file>${project.basedir}/Chronicle.properties</file>
 										</files>
 								</configuration>
 							</execution>
@@ -365,313 +364,6 @@
 				</plugins>
 			</build>
 		</profile>
-		
-<profile>
-			<id>parallel-ui-profile</id>
-			<build>
-				<plugins>
-					<!-- Plugin to initialize the project with properties read from the 
-						properties file -->
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>properties-maven-plugin</artifactId>
-						<version>1.0.0</version>
-						<executions>
-							<execution>
-								<phase>initialize</phase>
-								<goals>
-									<goal>read-project-properties</goal>
-								</goals>
-								<configuration>
-									<files>
-										<file>${project.basedir}/Chronicle.properties</file>
-									</files>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-
-					<plugin>
-						<groupId>com.github.seanroy</groupId>
-						<artifactId>lambda-maven-plugin</artifactId>
-						<version>2.3.3</version>
-						<dependencies>
-							<dependency>
-								<groupId>javax.xml.bind</groupId>
-								<artifactId>jaxb-api</artifactId>
-								<version>2.3.1</version>
-							</dependency>
-						</dependencies>
-					</plugin>
-
-					<!-- Plugin to do maven clean up of target folders -->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-clean-plugin</artifactId>
-						<version>3.0.0</version>
-						<executions>
-							<execution>
-								<id>CleanUpTargetFolder</id>
-								<phase>clean</phase>
-								<goals>
-									<goal>clean</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<excludeDefaultDirectories>true</excludeDefaultDirectories>
-							<filesets>
-								<fileset>
-									<directory>target/</directory>
-									<followSymlinks>false</followSymlinks>
-									<includes>
-										<include>**/*</include>
-									</includes>
-								</fileset>
-							</filesets>
-						</configuration>
-					</plugin>
-
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-resources-plugin</artifactId>
-						<version>2.7</version>
-						<dependencies>
-							<dependency>
-								<groupId>org.apache.maven.shared</groupId>
-								<artifactId>maven-filtering</artifactId>
-								<version>1.3</version>
-							</dependency>
-						</dependencies>
-					</plugin>
-
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-compiler-plugin</artifactId>
-						<version>3.8.0</version>
-						<executions>
-							<execution>
-								<phase>compile</phase>
-								<goals>
-									<goal>compile</goal>
-									<goal>testCompile</goal>
-								</goals>
-								<configuration>
-									<testSourceDirectory>${project.basedir}/src/main/java</testSourceDirectory>
-
-									<outputDirectory>${project.basedir}/target</outputDirectory>
-									<source>${java.version.source}</source>
-									<target>${java.version.target}</target>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-
-
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>2.21.0</version>
-						<configuration>
-							<skipTests>true</skipTests>
-							<systemPropertyVariables>
-								<browserName>${Browser}</browserName>
-							</systemPropertyVariables>
-						</configuration>
-					</plugin>
-
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-failsafe-plugin</artifactId>
-						<version>2.18.1</version>
-						<configuration>
-							<skip>false</skip>
-							<encoding>UTF-8</encoding>
-							<testSourceDirectory>${project.basedir}/src/main/java</testSourceDirectory>
-							<testClassesDirectory>${project.build.directory}/test-classes</testClassesDirectory>
-							<testFailureIgnore>true</testFailureIgnore>
-							<includes>
-								<include>**/Parallel*Runner.class</include>
-							</includes>
-							<parallel>classes</parallel>
-							<!--forkMode>perthread</forkMode -->
-							<forkCount>5</forkCount>
-							<reuseForks>false</reuseForks>
-							<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
-
-						</configuration>
-						<executions>
-							<execution>
-								<goals>
-									<goal>integration-test</goal>
-									<goal>verify</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-
-					<plugin>
-						<groupId>com.github.temyers</groupId>
-						<artifactId>cucumber-jvm-parallel-plugin</artifactId>
-						<version>${cucumber.jvm.parallel.version}</version>
-						<executions>
-							<execution>
-								<id>generateRunners</id>
-								<phase>generate-test-sources</phase>
-								<goals>
-									<goal>generateRunners</goal>
-								</goals>
-								<configuration>
-									<!-- Mandatory -->
-									<!-- comma separated list of package names to scan for glue code -->
-									<glue>
-										<package>PageObjects</package>
-										<package>StepDefinitions</package>
-										<package>util</package>
-									</glue>
-									<!-- These are optional, with the default values -->
-									<!-- Where to output the generated tests -->
-									<outputDirectory>${project.build.directory}/generated-test-sources/cucumber</outputDirectory>
-									<!-- The directory, which must be in the root of the runtime classpath, 
-										containing your feature files. -->
-									<featuresDirectory>src/main/resources/</featuresDirectory>
-									<!-- Directory where the cucumber report files shall be written -->
-									<cucumberOutputDir>${project.build.directory}/cucumber-parallel</cucumberOutputDir>
-									<!-- List of cucumber plugins. When none are provided the json formatter 
-										is used. For more advanced usage see section about configuring cucumber plugins -->
-									<plugins>
-										-										<!--The available options are junit, testng, html, pretty, json, 
-											usage and rerun -->
-										-										<!--Optional output directory. Overrides cucumberOutputDirectory. 
-											- Usefull when different plugins create files with the same extension -->
-										-										<!--Optional file extension. For build in cucumber plugins a sensible 
-											default is provided. -->
-										-
-										<plugin>
-											-
-											<name>json</name>
-											-
-											<outputDirectory>${project.build.directory}/cucumber-parallel/json</outputDirectory>
-											-
-										</plugin>
-										-
-										<plugin>
-											-
-											<name>html</name>
-											-
-											<outputDirectory>${project.build.directory}/cucumber-parallel/html</outputDirectory>
-											-
-										</plugin>
-										-
-										<plugin>
-											-
-											<name>junit</name>
-											-
-											<outputDirectory>${project.build.directory}/cucumber-parallel/junit</outputDirectory>
-											-
-										</plugin>
-										-										<!--plugin> - <name>com.cucumber.listener.ExtentCucumberFormatter</name> 
-											- <outputDirectory>${project.build.directory}/cucumber-parallel/extent-reports</outputDirectory> 
-											- </plugin -->
-										-
-									</plugins>
-									<!-- CucumberOptions.strict property -->
-									<strict>true</strict>
-									<!-- CucumberOptions.monochrome property -->
-									<monochrome>true</monochrome>
-									<!-- The tags to run, maps to CucumberOptions.tags property -->
-									<!-- Tags to run. Comma-separated list to be provided OR'ed For 
-										example - "@a, @b, @c" or AND'ed For Example - "@a", "@b", "@c" -->
-									<!-- Tags to Ignore. Comma-separated list to be provided OR'ed For 
-										example - "~@a, ~@b, ~@c" or AND'ed For Example - "~@a", "~@b", "~@c" -->
-									<tags>
-										<tag>@UserModule</tag>
-										<tag>~@Regres</tag>
-									</tags>
-									<!-- Generate TestNG runners instead of JUnit ones. -->
-									<useTestNG>false</useTestNG>
-									<!-- The naming scheme to use for the generated test classes. One 
-										of ['simple', 'feature-title', 'pattern'] -->
-									<namingScheme>pattern</namingScheme>
-									<!-- The class naming pattern to use. Only required/used if naming 
-										scheme is 'pattern'. -->
-									<namingPattern>Parallel{c}Runner</namingPattern>
-									<!-- One of [SCENARIO, FEATURE]. SCENARIO generates one runner per 
-										scenario. FEATURE generates a runner per feature. -->
-									<parallelScheme>SCENARIO</parallelScheme>
-
-									<!-- If set to true, only feature files containing the required 
-										tags shall be generated. -->
-									<filterFeaturesByTags>true</filterFeaturesByTags>
-									<!-- Specify a custom template for the generated sources (this is 
-										a path relative to the project base directory) -->
-									<customVmTemplate>src/main/resources/runnerTemplate.vm</customVmTemplate>
-									<!-- Specify a custom package name for generated sources. Default 
-										is no package. -->
-									<packageName />
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-
-					<plugin>
-						<groupId>net.masterthought</groupId>
-						<artifactId>maven-cucumber-reporting</artifactId>
-						<version>${maven.cucumber.reporting}</version>
-						<executions>
-							<execution>
-								<id>execution</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>generate</goal>
-								</goals>
-								<configuration>
-									<projectName>Nav4Me</projectName>
-									<outputDirectory>${project.basedir}/target/cucumber-reports</outputDirectory>
-									<cucumberOutput>${project.build.directory}/cucumber-parallel</cucumberOutput>
-									<!--jsonFiles> <jsonFile>${project.basedir}/target/test-results/**/*.json</jsonFile> 
-										</jsonFiles -->
-									<enableFlashCharts>true</enableFlashCharts>
-									<buildNumber>${project.version}</buildNumber>
-									<parallelTesting>true</parallelTesting>
-									<checkBuildResult>false</checkBuildResult>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.eclipse.m2e</groupId>
-							<artifactId>lifecycle-mapping</artifactId>
-							<version>1.0.0</version>
-							<configuration>
-								<lifecycleMappingMetadata>
-									<pluginExecutions>
-										<pluginExecution>
-											<pluginExecutionFilter>
-												<groupId> com.github.temyers </groupId>
-												<artifactId> cucumber-jvm-parallel-plugin </artifactId>
-												<versionRange> [5.0.0,) </versionRange>
-												<goals>
-													<goal>generateRunners</goal>
-												</goals>
-											</pluginExecutionFilter>
-											<action>
-												<execute />
-											</action>
-										</pluginExecution>
-									</pluginExecutions>
-								</lifecycleMappingMetadata>
-							</configuration>
-						</plugin>
-					</plugins>
-				</pluginManagement>
-			</build>
-		</profile>
-		
 
 	</profiles>
 </project>

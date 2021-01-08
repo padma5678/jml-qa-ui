@@ -3,18 +3,13 @@ package stepDefinitions;
 import cucumber.api.java.en.Given;
 import util.PropertiesUtil;
 import util.WebController;
-
-import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-
 import pageObjects.DashboardPage;
 import pageObjects.PostLoginPage;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Padmaja.Sagi
@@ -42,5 +37,19 @@ public class DashboardDefs {
 		dashboardPage.getJmlMenu_btn().click();
 		Wctrl.MinWait();
 		dashboardPage.getUsers_link().click();
+	}
+
+	@Given("^I click on genders link$")
+	public void iClickOnGendersLink() {
+		dashboardPage.getJmlMenu_btn().click();
+		Wctrl.MinWait();
+		dashboardPage.getGenders_link().click();
+	}
+
+	@Given("^I click on ranks link$")
+	public void iClickOnRanksLink() {
+		dashboardPage.getJmlMenu_btn().click();
+		Wctrl.MinWait();
+		dashboardPage.getRanks_link().click();
 	}
 }

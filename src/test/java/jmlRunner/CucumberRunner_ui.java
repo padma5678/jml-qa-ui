@@ -15,7 +15,7 @@ import cucumber.api.CucumberOptions;
 		"com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-extent-reports/report.html" }, 
 		features = {"src/main/resources/features" },
 		glue = { "pageObjects","stepDefinitions", "util","jmlRunner" },
-		tags = {"@UserModule"},
+		tags = {"@test"},
 		dryRun = false, 
 		snippets = SnippetType.CAMELCASE)
 

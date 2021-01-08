@@ -1,17 +1,14 @@
 package pageObjects;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
 
 /**
  * @author Padmaja.Sagi
  */
 public class UserListPage extends PageObject {
 
-    
 	public UserListPage(WebDriver driver) {
         super(driver);
     }
@@ -54,14 +51,6 @@ public class UserListPage extends PageObject {
     private WebElement username_txt;
     @FindBy(id = "password")
     private WebElement password_txt;
-    @FindBy(id = "jml-title")
-    private WebElement user_list_label;
-    @FindBy(id = "jml-add-button")
-    private WebElement userAdd_btn;
-    @FindBy(id = "jml-submit-button")
-    private WebElement save_btn;
-    @FindBy(xpath = "//button[contains(text(),'ID')]")
-    private WebElement idSort_btn;
     @FindBy(xpath = "//mat-cell[contains(@id,'_uniqueReferenceId_value')]")
     private WebElement uniqueReferenceId_value;
     @FindBy(xpath = "//mat-cell[contains(@id,'_firstname_value')]")
@@ -76,31 +65,8 @@ public class UserListPage extends PageObject {
     private WebElement rank_value;
     @FindBy(xpath = "//mat-cell[contains(@id,'_username_value')]")
     private WebElement username_value;
-    @FindBy(id = "jml-column-button")
-    private WebElement columns_btn;
-    @FindBy(id = "jml-button-update-columns")
-    private WebElement columnUpdate_btn;
-    
 
-    
-   //GENERIC method for selecting dropdown
-   //actual xpath for any drop down with mat-option
-    public String SelectDropddownvalue =  "//mat-option[contains(., \""+"PARAMETER"+"\")]";
-    public String userfirstname_fld = "//div[text()="+"'PARAMETER'"+"]";
-    public String columnHeader_fld = "//button[contains(text(),'PARAMETER')]";
-    public String columnSelection_fld = "//span[contains(text(),'PARAMETER')]/parent::label/div";
-    public String columnSelection_fld_Status = "//span[contains(text(),'PARAMETER')]/parent::label/div/input";
-
-  
-
- 	public WebElement prepareWebElementWithDynamicXpath(String xpathValue, String substitutionValue) {
- 		xpathValue = xpathValue.replace("PARAMETER", substitutionValue);
- 		System.out.println(xpathValue);		
- 		return driver.findElement(By.xpath(xpathValue));
- 	}
-
-
-    public WebElement getUniqueReferenceId_txt() {
+     public WebElement getUniqueReferenceId_txt() {
         return uniqueReferenceId_txt;
     }
 
@@ -176,22 +142,6 @@ public class UserListPage extends PageObject {
         return password_txt;
     }
     
-    public WebElement getUser_list_label() {
-        return user_list_label;
-    }
-
-    public WebElement getUserAdd_btn() {
-        return userAdd_btn;
-    }
-    
-    public WebElement getSave_btn() {
-        return save_btn;
-    }
-    
-    public WebElement getIdSort_btn() {
-        return idSort_btn;
-    }
-    
     public WebElement getUniqueReferenceId_value() {
     	return uniqueReferenceId_value;
     }
@@ -219,14 +169,5 @@ public class UserListPage extends PageObject {
     public WebElement getUserName_value() {
         return username_value;
     }
-
-    public WebElement getColumns_btn() {
-    	return columns_btn;
-    }
-    
-    public WebElement getColumnUpdate_btn() {
-    	return columnUpdate_btn;
-    }
-    
     
 }

@@ -1,18 +1,12 @@
 package stepDefinitions;
 
-
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.HashMap;
-
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
-
 import pageObjects.PostLoginPage;
 import pageObjects.UserListPage;
 import cucumber.api.java.en.Given;
@@ -42,7 +36,7 @@ public class UserListDefs {
 
 	@Given("^I am on the \"([^\"]*)\" page$")
 	public void iAmOnThePage(String expectedUserListTitle) throws Throwable {
-		String actualUserListTitle = userListPage.getUser_list_label().getText();
+		String actualUserListTitle = userListPage.getTitle_label().getText();
 		Assert.assertEquals(expectedUserListTitle, actualUserListTitle);
 	}
 
@@ -62,7 +56,7 @@ public class UserListDefs {
 		userdtls.put("rank", rank);
 		userdtls.put("userName", userName);
 		
-		userListPage.getUserAdd_btn().click();
+		userListPage.getAdd_btn().click();
 		Wctrl.MinWait();
 		userListPage.getUniqueReferenceId_txt().sendKeys(uniqueRef);
 		userListPage.getOtherRef_txt().sendKeys(otherRef);
@@ -85,7 +79,7 @@ public class UserListDefs {
 		userListPage.getPassword_txt().sendKeys(password);
 		userListPage.getSave_btn().click();
 		Wctrl.MinWait();
-		Assert.assertEquals("User List",userListPage.getUser_list_label().getText());
+		Assert.assertEquals("User List",userListPage.getTitle_label().getText());
 	}
 
 	@Then("^I select user row of \"([^\"]*)\"$")
@@ -114,26 +108,37 @@ public class UserListDefs {
 		userListPage.getColumns_btn().click();
 		Wctrl.MinWait();
 		String status = userListPage.prepareWebElementWithDynamicXpath(userListPage.columnSelection_fld_Status, surname).getAttribute("aria-checked");
-		if (status.equalsIgnoreCase("true")) 
+		if (status.equalsIgnoreCase("false"))
 		{
-			System.out.println("TestInfo : Check box already checked ");
+			System.out.println("TestInfo : Check box unchecked ");
 			userListPage.prepareWebElementWithDynamicXpath(userListPage.columnSelection_fld, surname).click();
 			Wctrl.MinWait();
 		    userListPage.getColumnUpdate_btn().click();
 		    Wctrl.MinWait();
 		}else {
-			System.out.println("TestInfo : Check box not checked ");
+			System.out.println("TestInfo : Check box checked ");
 	    }    
 	}
 
-	@When("^I switch \"([^\"]*)\" column on user list page$")
-	public void iSwitchColumnOnUserListPage(String surname) throws Throwable {
+	@When("^I switch off \"([^\"]*)\" column on user list page$")
+	public void iSwitchOffColumnOnUserListPage(String surname) throws Throwable {
 		userListPage.getColumns_btn().click();
 		Wctrl.MinWait();
-		userListPage.prepareWebElementWithDynamicXpath(userListPage.columnSelection_fld, surname).click();
-		Wctrl.MinWait();
-	    userListPage.getColumnUpdate_btn().click();
-	    Wctrl.MinWait();
+		try {
+			String status = userListPage.prepareWebElementWithDynamicXpath(userListPage.columnSelection_fld_Status, surname).getAttribute("aria-checked");
+			if (status.equalsIgnoreCase("true")) {
+				System.out.println("TestInfo : Check box already checked ");
+				userListPage.prepareWebElementWithDynamicXpath(userListPage.columnSelection_fld, surname).click();
+				Wctrl.MinWait();
+				userListPage.getColumnUpdate_btn().click();
+				Wctrl.MinWait();
+			} else {
+				System.out.println("TestInfo : Check box not checked ");
+			}
+		} catch (Exception e) {
+			System.out.println("TestInfo : Check box not checked ");
+		}
+
 	}
 
 	@Then("^I cannot see \"([^\"]*)\" column on user list page$")
@@ -159,8 +164,6 @@ public class UserListDefs {
 		}else {
 			Assert.assertTrue("Test Info : Column is visible", true);
 		}
-	   
-	   
 	}
 
 }

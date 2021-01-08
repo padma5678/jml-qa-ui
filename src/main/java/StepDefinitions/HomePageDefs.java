@@ -28,11 +28,11 @@ public class HomePageDefs {
 		page = PageFactory.initElements(driver, PostLoginPage.class);
 	}
 		
-	@Given("^Consultant login to Chronicle application as \"([^\"]*)\"$")
-	public void consultantLoginToChronicleApplicationAs(String arg1) throws Throwable {
+	@Given("^User login to Chronicle application as \"([^\"]*)\"$")
+	public void userLoginToChronicleApplicationAs(String arg1) throws Throwable {
 		driver.get(putil.getPropertyValue("URL"));
 		Wctrl.MinWait();
-		driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		page.getLogin_Btn().click();
 		page.getUsername_txt().sendKeys(putil.getPropertyValue("Consultant_User")); 
@@ -41,8 +41,8 @@ public class HomePageDefs {
 		Wctrl.MinWait();
 	}
 
-	@Given("^Consultant landed on Home page of Chronicle application$")
-	public void consultantLandedOnHomePageOfChronicleApplication() throws Throwable {
+	@Given("^User landed on Home page of Chronicle application$")
+	public void userLandedOnHomePageOfChronicleApplication() throws Throwable {
 	    String Actual_Title = driver.getTitle();
 	    String Expected_Title ="Chronicle 4";
 	    Assert.assertEquals(Actual_Title, Expected_Title);
